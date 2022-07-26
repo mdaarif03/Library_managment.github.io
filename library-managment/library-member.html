@@ -1,0 +1,201 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Education</title>
+    <meta name="keywords" content="free css templates, education, school, college, university, templatemo.com" />
+    <meta name="description" content="Education template is for academic related websites" />
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+    <!-- <script src="admin.jsp"></script> -->
+</head>
+<style>
+    center {
+        color: #707b84;
+        background: #3e464d;
+    }
+</style>
+
+<body>
+    <div id="templatemo_header_wrapper">
+        <div id="templatemo_header">
+            <div id="site_title">
+                <h1><a href="https://www.youtube.com/channel/UCvoZD9jJ1ItuM9IYsy96UvQ" target="_parent">
+                        <img src="/img/pic2.png" alt="Site Title" />
+                        <span>Online Medicine</span>
+
+                    </a></h1>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla aliquet, ipsum bibendum pretium volutpat,
+                diam magna facilisis ante.</p>
+
+        </div> <!-- end of templatemo_header -->
+
+    </div> <!-- end of templatemo_menu_wrapper -->
+
+    <div id="templatemo_menu_wrapper">
+        <div id="templatemo_menu">
+
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Adminstrator</a></li>
+                <li><a href="#">Library Member</a></li>
+                <!-- <input class="search" placeholder="Type Medicine"><button class="btn">Search</button> -->
+                <li><a href="#">Book Details</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="https://www.instagram.com/mdaarif.raza16/"><i class="fab fa-instagram">Contact Us</a></li>
+            </ul>
+
+        </div> <!-- end of templatemo_menu -->
+    </div>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+    <div class="container my-4">
+
+        <div class="form-group">
+            <label for="title">NAME</label>
+            <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">Add Name the list</small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Book Name</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+        </div>
+
+
+        <button id="add" class="btn btn-primary">Add to list</button>
+        <button id="clear" class="btn btn-primary" onclick="clearStorage()">Clear list</button>
+
+
+        <div id="items" class="my-4">
+            <h2>Members of Library And Issue Book Name</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">SNo</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">Book Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Get some Coffee</td>
+                        <td>You need coffee as you are a coder</td>
+                        <td><button class="btn btn-sm btn-primary">Delete</button></td>
+                        <!-- <button id="clear" class="btn btn-primary" onclick="clearStorage()">Delete</button> -->
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+
+    <script>
+
+
+        function getAndUpdate() {
+            console.log("Updating List...");
+            tit = document.getElementById('title').value;
+            desc = document.getElementById('description').value;
+            if (localStorage.getItem('itemsJson') == null) {
+                itemJsonArray = [];
+                itemJsonArray.push([tit, desc]);
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+            }
+            else {
+                itemJsonArrayStr = localStorage.getItem('itemsJson')
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+                itemJsonArray.push([tit, desc]);
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+            }
+            update();
+        }
+
+        function update() {
+            if (localStorage.getItem('itemsJson') == null) {
+                itemJsonArray = [];
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+            }
+            else {
+                itemJsonArrayStr = localStorage.getItem('itemsJson')
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+            }
+            // Populate the table
+            let tableBody = document.getElementById("tableBody");
+            let str = "";
+            itemJsonArray.forEach((element, index) => {
+                str += `
+                    <tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${element[0]}</td>
+                    <td>${element[1]}</td> 
+                    <td><button class="btn btn-sm btn-primary" onclick="deleted(${index})">Delete</button></td> 
+                    </tr>`;
+            });
+            tableBody.innerHTML = str;
+        }
+        add = document.getElementById("add");
+        add.addEventListener("click", getAndUpdate);
+        update();
+        function deleted(itemIndex) {
+            if (confirm("Do you really want to delete?")) {
+                console.log("Delete", itemIndex);
+                itemJsonArrayStr = localStorage.getItem('itemsJson')
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+                // Delete itemIndex element from the array
+                itemJsonArray.splice(itemIndex, 1);
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+                update();
+            }
+        }
+        function clearStorage() {
+            if (confirm("Do you really want to clear?")) {
+                console.log('Clearing the storage')
+                localStorage.clear();
+                update()
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+</div> <!-- end of content -->
+
+<div class="cleaner"></div>
+
+</div>
+
+<div id="templatemo_footer_wrapper">
+
+    <div id="templatemo_footer">
+
+        <ul class="footer_menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Adminstrator</a></li>
+            <li><a href="#">Library Member</a></li>
+            <li><a href="#">Book Details</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="https://www.instagram.com/mdaarif.raza16/">Contact Us</a></li>
+        </ul>
+
+        <!-- <a href="http://www.javatpoint.com" target="_parent">Website Projects</a> by <a href="http://www.javatpoint.com" target="_parent">javatpoint.com</a></div> -->
+
+    </div>
+    <center>Copyright © 2050 <a href="#">Your Company Name | ARazaTPoint</a></center>
+
+    <!-- <div align=center>This project  downloaded form <a href='http://www.javatpoint.com/'>free website projects</a></div></body> -->
+
+    </html>
